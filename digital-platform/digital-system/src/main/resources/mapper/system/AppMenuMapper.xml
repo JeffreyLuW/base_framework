@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meide.system.mapper.AppMenuMapper">
+
+    <resultMap type="com.meide.common.core.domain.entity.AppMenu" id="AppMenuResult">
+        <id property="itemId" column="item_id"/>
+        <result property="name" column="name"/>
+        <result property="code" column="code"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="orderNum" column="order_num"/>
+        <result property="menuType" column="menu_type"/>
+        <result property="visible" column="visible"/>
+        <result property="status" column="status"/>
+        <result property="icon" column="icon"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="desc" column="content"/>
+    </resultMap>
+
+    <sql id="selectMenuVo">
+        select item_id,code, name, parent_id, order_num, menu_type, visible, status, icon, create_time,content
+		from app_menu
+    </sql>
+
+    <select id="selectMenuList" parameterType="com.meide.common.core.domain.entity.AppMenu" resultMap="AppMenuResult">
+        <include refid="selectMenuVo"/>
+        <where>
+            <if test="name != null and name != ''">
+                AND name like concat('%', #{name}, '%')
+            </if>
+            <if test="visible != null and visible != ''">
+                AND visible = #{visible}
+            </if>
+            <if test="status != null and status != ''">
+                AND status = #{status}
+            </if>
+        </where>
+        order by parent_id, order_num
+    </select>
+
+    <select id="selectMenuListByUserId" resultMap="AppMenuResult">
+        <include refid="selectMenuVo"/>
+        <where>
+            visible = 0 and status = 0 and menu_type = 'M'
+            and item_id in(select menu_id from app_post_menu where post_id in
+            (select post_id from sys_user_post where user_id =#{userId}))
+            order by parent_id, order_num
+        </where>
+    </select>
+
+    <select id="selectMenuById" parameterType="Long" resultMap="AppMenuResult">
+        <include refid="selectMenuVo"/>
+        where item_id = #{itemId}
+    </select>
+
+    <select id="checkMenuNameUnique" parameterType="com.meide.common.core.domain.entity.AppMenu"
+            resultMap="AppMenuResult">
+        <include refid="selectMenuVo"/>
+        where name=#{name} and parent_id = #{parentId} limit 1
+    </select>
+
+    <select id="selectMenuListByParentId" resultType="com.meide.system.domain.vo.AppMenuVo">
+        <include refid="selectMenuVo"/>
+        where parent_id = #{parentId} order by order_num
+    </select>
+    <select id="hasChildByMenuId" resultType="java.lang.Integer">
+		select count(*) from app_menu where parent_id = #{menuId}
+	</select>
+    <select id="selectMenuByPostId" resultType="java.lang.Integer">
+		select menu_id from app_post_menu where post_id=#{postId} and menu_id in (select item_id from app_menu where menu_type = 'C')
+	</select>
+    <select id="selectUserDefaultMenuListByUserId" resultType="com.meide.common.core.domain.entity.AppMenu">
+        <include refid="selectMenuVo"/>
+        <where>
+            visible = 0 and status = 0 and menu_type = 'C'
+            and item_id in(select menu_id from app_post_menu where post_id in
+            (select post_id from sys_user_post where user_id =#{userId}))
+            order by parent_id, order_num limit 9
+        </where>
+    </select>
+
+    <update id="updateMenu" parameterType="com.meide.common.core.domain.entity.AppMenu">
+        update app_menu
+        <set>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="parentId != null">parent_id = #{parentId},</if>
+            <if test="orderNum != null and orderNum != ''">order_num = #{orderNum},</if>
+            <if test="menuType != null and menuType != ''">menu_type = #{menuType},</if>
+            <if test="visible != null">visible = #{visible},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="icon !=null and icon != ''">icon = #{icon},</if>
+            <if test="desc != null and desc != ''">content = #{desc},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            update_time = sysdate()
+        </set>
+        where item_id = #{itemId}
+    </update>
+
+    <insert id="insertMenu" parameterType="com.meide.common.core.domain.entity.AppMenu">
+        insert into app_menu(
+        <if test="itemId != null and itemId != 0">item_id,</if>
+        <if test="parentId != null and parentId != 0">parent_id,</if>
+        <if test="name != null and name != ''">name,</if>
+        <if test="orderNum != null and orderNum != ''">order_num,</if>
+        <if test="menuType != null and menuType != ''">menu_type,</if>
+        <if test="visible != null">visible,</if>
+        <if test="status != null">status,</if>
+        <if test="icon != null and icon != ''">icon,</if>
+        <if test="desc != null and desc != ''">content,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        create_time
+        )values(
+        <if test="itemId != null and itemId != 0">#{itemId},</if>
+        <if test="parentId != null and parentId != 0">#{parentId},</if>
+        <if test="name != null and name != ''">#{name},</if>
+        <if test="orderNum != null and orderNum != ''">#{orderNum},</if>
+        <if test="menuType != null and menuType != ''">#{menuType},</if>
+        <if test="visible != null">#{visible},</if>
+        <if test="status != null">#{status},</if>
+        <if test="icon != null and icon != ''">#{icon},</if>
+        <if test="desc != null and desc != ''">#{desc},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        sysdate()
+        )
+    </insert>
+    <insert id="insertAppUserMenu">
+        insert into app_user_menu(user_id,app_menu_id,order_num)values
+        <foreach collection="list" item="item" separator="," index="index">
+            (#{item.userId},#{item.appMenuId},#{item.orderNum})
+        </foreach>
+    </insert>
+
+    <delete id="deleteMenuById" parameterType="Long">
+	    delete from app_menu where item_id = #{itemId}
+	</delete>
+    <delete id="deleteAppUserMenu">
+        delete from app_user_menu where user_id = #{userId}
+    </delete>
+    <select id="selectUserFavoriteMenuList" resultType="com.meide.common.core.domain.entity.AppMenu">
+        select am.item_id,am.code, am.name, am.parent_id, um.order_num, am.menu_type, am.visible, am.status, am.icon, am.create_time,am.content
+		from app_user_menu um left join app_menu am on um.app_menu_id = am.item_id
+		where um.user_id = #{userId}
+		order by um.order_num asc
+    </select>
+    <select id="selectUserMenuListByParentId" resultType="com.meide.system.domain.vo.AppMenuVo">
+        select item_id,code, name, parent_id, order_num, menu_type, visible, status, icon, create_time,content
+		from app_menu am RIGHT JOIN app_post_menu pm on am.item_id=pm.menu_id  where am.parent_id = #{parentId}
+		and pm.menu_id!=#{parentId}
+        order by am.order_num
+    </select>
+
+</mapper> 

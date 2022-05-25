@@ -1,0 +1,146 @@
+// cover some element-ui styles
+.el-breadcrumb__inner,
+.el-breadcrumb__inner a {
+    font-weight: 400 !important;
+}
+
+.el-upload {
+    input[type="file"] {
+        display: none !important;
+    }
+}
+
+.el-upload__input {
+    display: none;
+}
+
+.cell {
+    .el-tag {
+        margin-right: 0px;
+    }
+}
+
+.small-padding {
+    .cell {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+}
+
+.fixed-width {
+    .el-button--text {
+        padding: 0px 10px;
+        width: 60px;
+    }
+}
+
+.status-col {
+    .cell {
+        padding: 0 10px;
+        text-align: center;
+        .el-tag {
+            margin-right: 0px;
+        }
+    }
+}
+
+// to fixed https://github.com/ElemeFE/element/issues/2461
+.el-dialog {
+    transform: none;
+    left: 0;
+    position: relative;
+    margin: 0 auto;
+}
+
+// refine element ui upload
+.upload-container {
+    .el-upload {
+        width: 100%;
+        .el-upload-dragger {
+            width: 100%;
+            height: 200px;
+        }
+    }
+}
+
+// dropdown
+.el-dropdown-menu {
+    a {
+        display: block
+    }
+}
+
+// fix date-picker ui bug in filter-item
+.el-range-editor.el-input__inner {
+    display: inline-flex !important;
+}
+
+// to fix el-date-picker css style
+.el-range-separator {
+    box-sizing: content-box;
+}
+
+.el-submenu__title i {
+    color: white;
+}
+
+//button.el-button--default:focus, button.el-button--default:hover {
+//  color: #606266 !important;;
+//}
+//button.el-button--primary:focus, button.el-button--primary:hover {
+//  color: white !important;
+//}
+button.el-button--text:focus,
+button.el-button--text:hover {
+    border-color: transparent !important;
+    background: none !important;
+}
+
+//.el-pagination.is-background .el-pager li.active:not(.disabled):hover {
+//  color: #fff !important;
+//}
+.el-message {
+    z-index: 4000 !important;
+}
+
+.el-button.el-button--mini.is-loading:before {
+    height: 28px !important;
+}
+
+.el-button.el-button--mini.is-loading .el-icon-loading {
+    height: 11px !important;
+}
+
+.el-form-item--small .el-form-item__content {
+    min-height: 34px;
+}
+
+//.el-switch__label {
+//  color: #606266;
+//}
+.el-table--small th,
+.el-table--small td {
+    padding: 3px 0;
+}
+
+div.el-table .el-table__header-wrapper th,
+.el-table .el-table__fixed-header-wrapper th {
+    height: auto;
+}
+
+.el-dialog {
+    overflow: hidden;
+    box-shadow: 1px 1px 50px rgba(0, 0, 0, .3);
+}
+
+.v-modal {
+    opacity: 0.1;
+}
+
+.el-tooltip__popper {
+    max-width: 50% !important;
+}
+
+.el-form-item__label {
+    padding-right: 8px;
+}

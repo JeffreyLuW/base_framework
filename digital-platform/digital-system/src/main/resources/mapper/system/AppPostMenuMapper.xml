@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meide.system.mapper.AppPostMenuMapper">
+
+    <resultMap type="com.meide.system.domain.AppPostMenu" id="AppPostMenuResult">
+        <result property="postId" column="post_id"/>
+        <result property="menuId" column="menu_id"/>
+    </resultMap>
+
+
+    <delete id="deletePostMenuByPostId" parameterType="Long">
+		delete from app_post_menu where post_id =#{postId}
+	</delete>
+    <select id="count" resultType="java.lang.Integer" parameterType="com.meide.system.domain.AppPostMenu">
+        select count(*) as num from app_post_menu
+        <where>
+            <if test="postId!=null">
+                and post_id = #{postId}
+            </if>
+            <if test="menuId!=null">
+                and menu_id = #{menuId}
+            </if>
+        </where>
+    </select>
+
+    <insert id="batchPostMenu">
+        insert into app_post_menu(post_id, menu_id) values
+        <foreach item="item" index="index" collection="list" separator=",">
+            (#{item.postId},#{item.menuId})
+        </foreach>
+    </insert>
+
+</mapper> 

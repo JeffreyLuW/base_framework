@@ -1,0 +1,207 @@
+# 项目相关配置
+digital:
+  # 名称
+  name: Digital
+  # 版本
+  version: 0.1.0
+  # 版权年份
+  copyrightYear: 2022
+  # 实例演示开关
+  demoEnabled: true
+  # 文件路径 工作目录相对路径
+  profile: uploadPath
+  # 获取ip地址开关
+  addressEnabled: false
+  # 登录验证码
+  captcha:
+    # 是否启用验证码校验，开发、测试时为了方便，可以关闭
+    enable: false
+    # 验证码类型 math 数组计算 char 字符验证
+    type: char
+  # 是否给前端展示未知异常堆栈信息，仅开发、测试使用
+  showUnknownException: true
+  #无需认证的静态资源
+  security:
+    ignoring-static-urls: /**/*.*,/prepareConfig,/v2/api-docs/ext,/v2/api-docs-ext,/swagger/**
+
+  #是否开启简易crud公共接口
+  data-api:
+    enabled: false
+    #屏蔽表名  qrtz_%表示屏蔽以qrtz_开头的表名 ，sys_job_log 示直接屏蔽sys_job_log表
+    ignored-table-list: qrtz_%,gen_%,sys_job_log
+    #更新操作中,开启全部更新max时
+    #1.该字段在updateIgnoredColumn存在,前端传参中不存在该字段，默认不进行更新该字段
+    #2.该字段在updateIgnoredColumn存在,前端传参数存在该字段，不受updateIgnoredColumn配置影响,可以更新该字段
+    update-ignored-column: create_by
+
+# 开发环境配置
+server:
+  # 服务器的HTTP端口，默认为8081
+  port: 18003
+  servlet:
+    # 应用的访问路径
+    context-path: /
+  tomcat:
+    # tomcat的URI编码
+    uri-encoding: UTF-8
+    # tomcat最大线程数，默认为200
+    max-threads: 800
+    # Tomcat启动初始化的线程数，默认值25
+    min-spare-threads: 30
+  # 静态文件压缩
+  compression:
+    enabled: true
+    mime-types: application/javascript,text/css,application/json,application/xml,text/html,text/xml,text/plain,image/x-icon,image/jpeg,image/gif,font/woff2
+
+# Spring配置
+spring:
+  # 排除默认图标
+  mvc:
+    favicon:
+      enabled: false
+  # 资源信息
+  messages:
+    # 国际化资源文件路径
+    basename: i18n/messages
+  # 文件上传
+  servlet:
+     multipart:
+       # 单个文件大小
+       max-file-size: 100MB
+       # 设置总上传的文件大小
+       max-request-size: 200MB
+  # 服务模块
+  devtools:
+    restart:
+      # 热部署开关
+      enabled: false
+
+  cache:
+    #配置可选 ehcache | redis
+    #使用ehcache时redis配置无效
+    type: ehcache
+  # redis 配置
+  redis:
+    # 地址
+    host: localhost
+    # 端口，默认为6379
+    port: 6379
+    # 密码
+    password:
+    # 连接超时时间
+    timeout: 10s
+    lettuce:
+      pool:
+        # 连接池中的最小空闲连接
+        min-idle: 0
+        # 连接池中的最大空闲连接
+        max-idle: 8
+        # 连接池的最大数据库连接数
+        max-active: 8
+        # #连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1ms
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    druid:
+      # 主库数据源
+      master:
+        ##平时开发使用
+#        url: jdbc:mysql://10.20.3.12/mdzhsw?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
+#        username: root
+#        password: mysql666
+        url: jdbc:mysql://localhost/baseframework?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
+        username: root
+        password: jc1
+      # 从库数据源
+      slave:
+        # 从数据源开关/默认关闭
+        enabled: false
+        url:
+        username:
+        password:
+      # 初始连接数
+      initialSize: 5
+      # 最小连接池数量
+      minIdle: 10
+      # 最大连接池数量
+      maxActive: 20
+      # 配置获取连接等待超时的时间
+      maxWait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      # 配置一个连接在池中最大生存的时间，单位是毫秒
+      maxEvictableIdleTimeMillis: 900000
+      # 配置检测连接是否有效
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      webStatFilter:
+        enabled: true
+      statViewServlet:
+        enabled: true
+        # 设置白名单，不填则允许所有访问
+        allow:
+        url-pattern: /druid/*
+        # 控制台管理用户名和密码
+        login-username:
+        login-password:
+      filter:
+        stat:
+          enabled: true
+          # 慢SQL记录
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: true
+        wall:
+          config:
+            multi-statement-allow: true
+
+# token配置
+token:
+    # 令牌自定义标识
+    header: Authorization
+    # 令牌密钥
+    secret: abcdefghijklmnopqrstuvwxyz
+    # 令牌有效期（默认30分钟）
+    expireTime: 30
+
+# MyBatis配置
+mybatis:
+    # 搜索指定包别名
+    typeAliasesPackage: com.meide.**.domain
+    # 配置mapper的扫描，找到所有的mapper.xml映射文件
+    mapperLocations: classpath*:mapper/**/*Mapper.xml
+    # 加载全局的配置文件
+    configLocation: classpath:mybatis/mybatis-config.xml
+
+# PageHelper分页插件
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+# Swagger配置
+swagger:
+  # 是否开启swagger
+  enabled: true
+  # 请求前缀
+  pathMapping: /
+knife4j:
+  markdowns: classpath:markdown/*.md
+  basic:
+    enable: false
+# 防止XSS攻击
+xss:
+  # 过滤开关
+  enabled: true
+  # 排除链接（多个用逗号分隔）
+  excludes: /system/notice/*
+  # 匹配链接
+  urlPatterns: /system/*,/monitor/*,/tool/*
+irr:
+  code: 4150005

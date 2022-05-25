@@ -1,0 +1,24 @@
+package com.meide.framework.renren;
+
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
+
+/**
+ *功能描述 国际化-工具类
+ *
+ * @author jiay
+ */
+public class MessageUtils {
+    private static MessageSource messageSource;
+    static {
+        messageSource = (MessageSource)SpringContextUtils.getBean("messageSource");
+    }
+
+    public static String getMessage(int code){
+        return getMessage(code, new String[0]);
+    }
+
+    public static String getMessage(int code, String... params){
+        return messageSource.getMessage(code+"", params, LocaleContextHolder.getLocale());
+    }
+}

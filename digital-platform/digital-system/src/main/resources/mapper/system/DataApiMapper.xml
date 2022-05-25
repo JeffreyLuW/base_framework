@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meide.register.mapper.DataApiMapper">
+
+    <select id="selectTableList" parameterType="String" resultType="SysTable">
+
+             SELECT table_name tableName    FROM information_schema.tables WHERE table_schema= (select database())   ${ignoreTableName}
+
+    </select>
+
+
+    <select id="selectColumnListByTableName" parameterType="String" resultType="com.meide.register.domain.SysTableColumn">
+
+       SELECT  column_name columnName,  data_type dataType, column_comment columnComment,ordinal_position ordinalPosition
+       ,(case when column_key = 'PRI' then '1' else '0' end)  as isPk ,  is_nullable  isNullable
+		FROM information_schema.columns WHERE table_schema = (SELECT DATABASE())   AND  table_name = #{tableName}
+		AND table_name NOT LIKE 'qrtz_%' AND table_name NOT LIKE 'gen_%'
+		ORDER BY ordinal_position
+
+    </select>
+
+
+</mapper>
