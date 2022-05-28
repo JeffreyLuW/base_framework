@@ -1,10 +1,10 @@
 package com.meide.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.meide.common.DataSourceContextHolder;
 import com.meide.mapper.TaosTestMapper;
 import com.meide.model.PO.T;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +18,9 @@ public class TaosTestService {
 
     public Object test(){
         DataSourceContextHolder.setDB(DataSourceContextHolder.TAOSDB);
-        List<T> ts = taosTestMapper.testList();
+        LambdaQueryWrapper<T> wrapper = new LambdaQueryWrapper<T>();
+
+        List<T> ts = taosTestMapper.selectList(wrapper);
         return ts;
     }
 

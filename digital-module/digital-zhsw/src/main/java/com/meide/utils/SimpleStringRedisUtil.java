@@ -1,4 +1,4 @@
-package com.meide.common.utils;
+package com.meide.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;

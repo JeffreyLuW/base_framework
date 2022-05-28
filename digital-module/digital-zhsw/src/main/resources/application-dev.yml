@@ -1,4 +1,15 @@
 spring:
+#  mqtt:
+#    username: meide
+#    password: Meide@123
+#    url: tcp://10.0.5.14:1883
+#    client:
+#      id: 'mqtt_boot'
+#    default:
+#      topic: 'test'
+##    topics: topic,hello,hit/us
+#    topics: topic
+#    qosValues: 2,3
   redis:
     host: 10.0.5.14
     port: 6379
@@ -35,6 +46,24 @@ spring:
       max-lifetime: 1800000
       connection-timeout: 30000
       connection-test-query: show tables
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+mqtt:
+  username: test
+  password: test2020
+  url: tcp://10.0.5.14
+  receiver:
+    clientId: receiver_mqtt1
+    defaultTopic: test
+  sender:
+    clientId: sender_mqtt1
+    defaultTopic: test
+
 
 
 
