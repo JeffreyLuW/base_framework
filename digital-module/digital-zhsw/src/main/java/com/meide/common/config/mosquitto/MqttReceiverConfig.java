@@ -1,6 +1,5 @@
 package com.meide.common.config.mosquitto;
 
-import com.meide.controller.MosquittoUtil;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,10 +12,8 @@ import org.springframework.integration.mqtt.core.DefaultMqttPahoClientFactory;
 import org.springframework.integration.mqtt.core.MqttPahoClientFactory;
 import org.springframework.integration.mqtt.inbound.MqttPahoMessageDrivenChannelAdapter;
 import org.springframework.integration.mqtt.support.DefaultPahoMessageConverter;
-import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
-import org.springframework.messaging.MessagingException;
 
 import java.util.Objects;
 
@@ -55,7 +52,7 @@ public class MqttReceiverConfig {
     private String defaultTopic;
 
     @Autowired
-    private MosquittoUtil mosquittoUtil;
+    private MosquittoTemplate mosquittoTemplate;
 
     /**
      * MQTT连接器选项
@@ -123,7 +120,7 @@ public class MqttReceiverConfig {
         return message -> {
             String topic = Objects.requireNonNull(message.getHeaders().get("mqtt_receivedTopic")).toString();
             String msg = message.getPayload().toString();
-            mosquittoUtil.receive(topic, msg);
+            receive(topic, msg);
         };
     }
 /*
@@ -142,6 +139,16 @@ public class MqttReceiverConfig {
         };
     }
 */
+
+    public void receive(String msg){
+        System.out.println("msg = " + msg +"\n");
+    }
+
+    public void receive(String topic, String msg){
+        System.out.println("\n--------------------START-------------------\n" +
+                "接收到订阅消息:\ntopic:" + topic + "\nmessage:" + msg +
+                "\n---------------------END--------------------");
+    }
 
 }
 

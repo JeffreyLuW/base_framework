@@ -3,6 +3,7 @@ package com.meide.controller;
 
 
 import com.meide.common.config.mosquitto.IMqttSender;
+import com.meide.common.config.mosquitto.MosquittoTemplate;
 import com.meide.common.config.mosquitto.MqttReceiverConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,12 @@ public class MosquittoTestController {
 
     final IMqttSender iMqttSender;
     final MqttReceiverConfig mqttReceiverConfig;
+    final MosquittoTemplate mosquittoTemplate;
 
     // 发送自定义消息内容（使用默认主题）
     @RequestMapping("/test1/{data}")
     public void test1(@PathVariable("data") String data) {
-        iMqttSender.sendToMqtt(data);
+        mosquittoTemplate.senderByDefaultTopic(data);
     }
 
     // 发送自定义消息内容，且指定主题
@@ -31,7 +33,7 @@ public class MosquittoTestController {
     public void test2(@PathVariable("topic") String topic, @PathVariable("data") String data) throws InterruptedException {
         // 测试重连
         //for(int i=0;i<100000;i++){
-            iMqttSender.sendToMqtt(topic, data);
+        mosquittoTemplate.senderBySpecifyTopic(data, topic);
             //Thread.sleep(3000);
         //}
 
@@ -40,12 +42,12 @@ public class MosquittoTestController {
     @GetMapping("/test3")
     public void test() {
         // 添加一个或多个监听Topic
-        mqttReceiverConfig.adapter.addTopic("topic1"); // 默认qos为1
-        mqttReceiverConfig.adapter.addTopic("topic2", 1);
-        mqttReceiverConfig.adapter.addTopic("topic3", "topic4");
-        mqttReceiverConfig.adapter.addTopics(new String[]{"topic5", "topic6"},new int[]{1, 1});
+        mosquittoTemplate.addTopic("topic1");// 默认qos为1
+        mosquittoTemplate.addTopicWithQos("topic2", 1);
+        mosquittoTemplate.addTopic("topic3", "topic4");
+        mosquittoTemplate.addTopicWithQos(new String[]{"topic5", "topic6"},new int[]{1, 1});
         // 删除一个或多个监听Topic
-        mqttReceiverConfig.adapter.removeTopic("topic1");
+        mosquittoTemplate.removeTopic("topic1");
 //        mqttReceiverConfig.adapter.removeTopic("topic2", "topic3");
     }
 
