@@ -110,9 +110,9 @@ spring:
 #        url: jdbc:mysql://10.20.3.12/mdzhsw?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
 #        username: root
 #        password: mysql666
-        url: jdbc:mysql://localhost/baseframework?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
+        url: jdbc:mysql://10.0.5.14/baseframework?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
         username: root
-        password: jc1
+        password: Meide@123
       # 从库数据源
       slave:
         # 从数据源开关/默认关闭

@@ -12,7 +12,7 @@
     <artifactId>digital-module</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>digital-zhsw</module>
+        <module>digital-collection</module>
 
     </modules>
 

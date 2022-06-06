@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>digital-zhsw</artifactId>
+    <artifactId>digital-collection</artifactId>
     <description>智慧水务</description>
 
     <properties>
