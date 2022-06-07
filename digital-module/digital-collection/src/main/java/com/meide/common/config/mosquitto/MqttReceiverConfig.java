@@ -51,8 +51,6 @@ public class MqttReceiverConfig {
     @Value("${mqtt.receiver.defaultTopic}")
     private String defaultTopic;
 
-
-
     /**
      * MQTT连接器选项
      */

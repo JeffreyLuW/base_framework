@@ -4,11 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 
-/**
- * @author spark
- * @version 1.0
- * @date 2019/11/8 14:09
- */
 @Slf4j
 public class DynamicDataSource extends AbstractRoutingDataSource {
 	@Override
