@@ -1,7 +1,7 @@
 spring:
   redis:
-    #host: 10.0.5.14
-    host: 192.168.17.129
+    host: 10.0.5.14
+    #host: 192.168.17.129
     port: 6379
     password: Meide@123
     lettuce:
@@ -25,8 +25,8 @@ spring:
       pool-name: MysqlHikariCP
     taosdb:
       driver-class-name: com.taosdata.jdbc.TSDBDriver
-      #jdbc-url: jdbc:TAOS://10.0.5.14:6030/demo?locale=en_US.UTF-8&timezone=UTC-8&charset=utf-8
-      jdbc-url: jdbc:TAOS://192.168.17.129:6030/demo?locale=en_US.UTF-8&timezone=UTC-8&charset=utf-8
+      jdbc-url: jdbc:TAOS://10.0.5.14:6030/demo?locale=en_US.UTF-8&timezone=UTC-8&charset=utf-8
+      #jdbc-url: jdbc:TAOS://192.168.17.129:6030/demo?locale=en_US.UTF-8&timezone=UTC-8&charset=utf-8
       username: root
       password: taosdata
       minimum-idle: 1
@@ -47,8 +47,8 @@ pagehelper:
 mqtt:
   username: test
   password: test2020
-#  url: tcp://10.0.5.14
-  url: tcp://192.168.17.129
+  url: tcp://10.0.5.14
+#url: tcp://192.168.17.129
   receiver:
     clientId: receiver_mqtt1
     defaultTopic: test

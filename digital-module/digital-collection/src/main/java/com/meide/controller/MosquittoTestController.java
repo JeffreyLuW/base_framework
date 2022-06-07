@@ -2,9 +2,9 @@ package com.meide.controller;
 
 
 
-import com.meide.common.config.mosquitto.IMqttSender;
+//import com.meide.common.config.mosquitto.IMqttSender;
 import com.meide.common.config.mosquitto.MosquittoTemplate;
-import com.meide.common.config.mosquitto.MqttReceiverConfig;
+//import com.meide.common.config.mosquitto.MqttReceiverConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class MosquittoTestController {
 
 
-
-    final IMqttSender iMqttSender;
-    final MqttReceiverConfig mqttReceiverConfig;
+//
+//    final IMqttSender iMqttSender;
+//    final MqttReceiverConfig mqttReceiverConfig;
     final MosquittoTemplate mosquittoTemplate;
 
     // 发送自定义消息内容（使用默认主题）

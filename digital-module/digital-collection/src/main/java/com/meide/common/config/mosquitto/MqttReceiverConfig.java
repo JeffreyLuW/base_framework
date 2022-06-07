@@ -51,8 +51,7 @@ public class MqttReceiverConfig {
     @Value("${mqtt.receiver.defaultTopic}")
     private String defaultTopic;
 
-    @Autowired
-    private MosquittoTemplate mosquittoTemplate;
+
 
     /**
      * MQTT连接器选项
