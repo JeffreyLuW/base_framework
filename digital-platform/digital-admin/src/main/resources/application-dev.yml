@@ -107,10 +107,10 @@ spring:
       # 主库数据源
       master:
         ##平时开发使用
-#        url: jdbc:mysql://10.20.3.12/mdzhsw?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
+#        url: jdbc:mysql://10.20.3.12/baseframework?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
 #        username: root
 #        password: mysql666
-        url: jdbc:mysql://10.0.5.14/baseframework?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
+        url: jdbc:mysql://10.0.5.14/iot?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
         username: root
         password: Meide@123
       # 从库数据源
@@ -177,6 +177,22 @@ mybatis:
     mapperLocations: classpath*:mapper/**/*Mapper.xml
     # 加载全局的配置文件
     configLocation: classpath:mybatis/mybatis-config.xml
+
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: auto
+      #      field-strategy: not_empty
+      #驼峰下划线转换
+      column-underline: true
+      #逻辑删除配置
+      logic-delete-field: is_deleted  #全局逻辑删除字段值
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      db-type: mysql
+    refresh: false
+  configuration:
+    map-underscore-to-camel-case: true
 
 # PageHelper分页插件
 pagehelper:
