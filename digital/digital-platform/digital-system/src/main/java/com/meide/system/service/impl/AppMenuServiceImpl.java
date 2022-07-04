@@ -15,6 +15,7 @@ import com.meide.system.mapper.AppMenuMapper;
 import com.meide.system.mapper.AppPostMenuMapper;
 import com.meide.system.service.IAppMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

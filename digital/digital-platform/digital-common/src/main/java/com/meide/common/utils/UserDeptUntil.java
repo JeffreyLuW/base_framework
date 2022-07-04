@@ -4,6 +4,7 @@ import cn.hutool.core.util.ObjectUtil;
 import com.meide.common.core.domain.entity.SysDept;
 import com.meide.common.core.domain.entity.SysUser;
 import com.meide.common.core.domain.model.LoginUser;
+import com.meide.common.mapper.UserDeptUntilMapper;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;

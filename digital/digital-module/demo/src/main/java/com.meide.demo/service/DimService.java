@@ -16,6 +16,6 @@ public class DimService {
     private IDimArea dimAreaMapper;
 
     public void query(){
-        dimAreaMapper.selectCount(new QueryWrapper<DimArea>().eq("id",1));
+        dimAreaMapper.selectList(new QueryWrapper<DimArea>().eq("id",1));
     }
 }

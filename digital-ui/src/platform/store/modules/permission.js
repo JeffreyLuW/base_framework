@@ -3,6 +3,7 @@ import { getRouters } from '@/platform/api/menu'
 import Layout from '@/platform/layout1/index'
 import simple_util from '../../utils/simple_util.js';
 import path from 'path';
+import InnerLink from '@/platform/layout1/components/InnerLink'
 
 const permission = {
   state: {
@@ -94,11 +95,16 @@ const permission = {
             {
               path: '/index', component: "index", name: '首页',
               meta: { title: '首页', icon: 'home', noCache: true, affix: true }
+            },
+            {
+              path: '/innerLink', component: (resolve) => require(['@/platform/layout1/components/InnerLink/index'], resolve), name: 'GIS',
+              meta: { title: 'GIS', icon: 'gisapp', noCache: true, affix: true }
             }
           );
           commit('SET_MENUS', menus);
           commit('SET_ROUTES', menus);
           commit('SET_TOPBAR_ROUTES', menus);
+          console.log('resolve:',resolve);
           resolve(menus)
         })
       })
@@ -113,7 +119,7 @@ function filterAsyncRouter(asyncRouterMap) {
       // Layout组件特殊处理
       if (route.component === 'Layout') {
         route.component = Layout
-      } else {
+      }else {
         route.component = loadView(route.component)
       }
     }

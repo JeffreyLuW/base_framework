@@ -1,6 +1,7 @@
 package com.meide.system.service.impl;
 
 import com.meide.common.core.domain.model.LoginUser;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import com.meide.common.utils.StringUtils;
 import com.meide.system.domain.SysUserOnline;

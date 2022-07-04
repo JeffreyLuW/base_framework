@@ -1,6 +1,7 @@
 //程序入口.在app.js中自定义引入和配置。
 //import './platform/main.js';
 let layout = 2;
+console.log('main layout:',layout);
 if(layout == 1){
     import ('./platform/main1.js');
     //layout2 经典布局  layout1 流行模板布局

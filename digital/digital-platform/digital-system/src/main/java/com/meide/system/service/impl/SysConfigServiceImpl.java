@@ -13,6 +13,7 @@ import com.meide.system.domain.SysConfig;
 import com.meide.system.mapper.SysConfigMapper;
 import com.meide.system.service.ISysConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

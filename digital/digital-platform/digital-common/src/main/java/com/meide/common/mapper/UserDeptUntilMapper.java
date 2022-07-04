@@ -1,4 +1,4 @@
-package com.meide.common.utils;
+package com.meide.common.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;

@@ -5,7 +5,6 @@ import com.meide.demo.domain.DimArea;
 import org.apache.ibatis.annotations.Mapper;
 
 
-
 @Mapper
 public interface IDimArea extends BaseMapper<DimArea> {
 
