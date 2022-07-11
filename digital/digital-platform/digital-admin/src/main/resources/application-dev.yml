@@ -83,7 +83,7 @@ spring:
   # redis 配置
   redis:
     # 地址
-    host: localhost
+    host: 10.0.5.14
     # 端口，默认为6379
     port: 6379
     # 密码
@@ -102,21 +102,22 @@ spring:
         max-wait: -1ms
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    driverClassName: com.mysql.cj.jdbc.Driver
+    # driverClassName: com.mysql.cj.jdbc.Driver
     druid:
       # 主库数据源
       master:
+        driverClassCame: com.mysql.cj.jdbc.Driver
         ##平时开发使用
-        url: jdbc:mysql://localhost/baseframework?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+        url: jdbc:mysql://10.0.5.14/DA?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
         username: root
-        password: jc1
+        password: Meide@123
       # 从库数据源
-      slave:
-        # 从数据源开关/默认关闭
-        enabled: false
-        url:
-        username:
-        password:
+      taosdb:
+        driverClassCame: com.taosdata.jdbc.TSDBDriver
+        url: jdbc:TAOS://10.0.5.14:6030/collection?locale=en_US.UTF-8&timezone=UTC-8&charset=utf-8
+        #      jdbc-url: jdbc:TAOS://192.168.17.129:6030/demo?locale=en_US.UTF-8&timezone=UTC-8&charset=utf-8
+        username: root
+        password: taosdata
       # 初始连接数
       initialSize: 5
       # 最小连接池数量

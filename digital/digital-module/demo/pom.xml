@@ -11,6 +11,18 @@
 
     <artifactId>demo</artifactId>
     <dependencies>
+
+        <!-- 实体类/vo 转换 -->
+        <dependency>
+            <groupId>net.sf.dozer</groupId>
+            <artifactId>dozer-spring</artifactId>
+            <version>5.5.1</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.dozer</groupId>
+            <artifactId>dozer</artifactId>
+            <version>5.5.1</version>
+        </dependency>
         <dependency>
             <groupId>com.meide</groupId>
             <artifactId>digital-framework</artifactId>

@@ -104,6 +104,13 @@ public class AjaxResult<T> {
 
     /**
      * 返回错误消息
+     */
+    public static <T> AjaxResult<T> errorWithMsg() {
+        return AjaxResult.error("关键字段缺失", null);
+    }
+
+    /**
+     * 返回错误消息
      *
      * @param msg 返回内容
      * @return 警告消息
