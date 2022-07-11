@@ -32,7 +32,7 @@ public class GroupDeviceBindService {
         }).collect(Collectors.toList());
 
 
-        mapper.insertBatchSomeColumn(collect);
+        mapper.insertBatch(collect);
 
     }
 

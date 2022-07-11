@@ -102,9 +102,11 @@ public class BaseController {
         return rows > 0 ? AjaxResult.success(rows) : AjaxResult.error();
     }
 
-    protected AjaxResult<Object> rows(Object data)
-    {
+    protected AjaxResult<Object> rows(Object data) {
         return AjaxResult.success(data);
+    }
+    protected AjaxResult<Object> rows() {
+        return AjaxResult.success();
     }
 
     /**

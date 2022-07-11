@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meide.demo.mapper.GroupDeviceBindMapper">
+
+    <insert id="insertBatch" parameterType="List">
+        insert into group_device_bind (group_id, device_id, device_type ) values
+        <foreach collection="list" item="data"  separator=",">
+            (
+            <if test="#{data.groupId} != null">
+                #{data.groupId},
+            </if>
+            <if test="#{data.deviceId} != null">
+                #{data.deviceId},
+            </if>
+            <if test="#{data.deviceType} != null">
+                #{data.deviceType}
+            </if>
+            )
+        </foreach>
+    </insert>
+
+
+
+</mapper>

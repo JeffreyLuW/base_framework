@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/GroupDevice")
+@RequestMapping("/groupDevice")
 public class GroupDeviceBindController extends BaseController {
 
     final GroupDeviceBindService service;
@@ -26,8 +26,8 @@ public class GroupDeviceBindController extends BaseController {
     public AjaxResult updateBind(@RequestParam("groupId") int groupId,
                                  @RequestParam("deviceType") String deviceType,
                                  @RequestParam("deviceList") List<Integer> deviceList){
-
-        return rows("");
+        service.editGroup(groupId, deviceList, deviceType);
+        return rows();
     }
 
 
