@@ -8,11 +8,11 @@ let ignoredRoute = [
 ];
 //顶级路由，不会包含首页布局、菜单导航。该组件就是整个页面。 /test/页面 默认都是顶级路由。
 let topLevelRoute = (route) => {
-  return (["/401", "/login", "/redirect","/OneMap","/system/configurationManagement/appversion/download"].indexOf(route.path) > -1 || route.path.startsWith("/test/"));
+  return (["/401", "/login", "/redirect","/system/configurationManagement/appversion/download"].indexOf(route.path) > -1 || route.path.startsWith("/test/"));
 };
 //内容区路由,位于菜单下|右方 但不在菜单中，不受菜单列表控制
 let notMenuRoute = [
-  "/system/user/profile/index", "/index",
+  "/system/user/profile/index", "/index", "innerLink"
 ];
 let counter = 0;
 

@@ -89,6 +89,16 @@ export const constantRoutes = [{
         }]
     },
     {
+        path: '/innerLink',
+        component: Layout,
+        hidden: true,
+        children: [{
+            path: '',
+            component: (resolve) => require(['@/platform/layout1/components/InnerLink'], resolve),
+            name: 'InnerLink',
+        }]
+    },
+    {
         path: '*',
         component: (resolve) => require(['@/platform/views/404'], resolve),
     },

@@ -24,15 +24,6 @@
         </div>
       </el-col>
     </el-row> -->
-
-    <div style="position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0 ">
-      <iframe src='http://36.250.94.248:6082/main.html?user=9dfced1cc0b49f54&pwd=ffffe084a55098e514ddd30f2213274f'
-        frameborder="no" style="width: 100%; height: 100%" scrolling="auto"></iframe>
-    </div>
   </div>
 </template>
 
@@ -42,15 +33,6 @@
 //import RaddarChart from '../platform/views/dashboard/RaddarChart'
 //import PieChart from '../platform/views/dashboard/PieChart'
 //import BarChart from '../platform/views/dashboard/BarChart'
-
-const height = document.documentElement.clientHeight - 94.5 + "px";
-const style = {
-  position: 'absolute',
-  left: 0,
-  right: 0,
-  top: 0,
-  bottom: 0
-};
 
 const lineChartData = {
   newVisitis: {
@@ -87,10 +69,10 @@ export default {
     }
   },
   mounted () {
-    debugger
+    //debugger
 
     let conf = window.sys
-    console.log(conf)
+    //console.log(conf)
 
     setTimeout(() => {
       this.show = true

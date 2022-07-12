@@ -19,10 +19,14 @@
           </el-dropdown-menu>
         </el-dropdown>
         <div class="user-extra">
-          <div class="user-name" :title="loginUserName">{{ loginUserName }}</div>
+          <div class="user-name" :title="loginUserName">
+            {{ loginUserName }}
+          </div>
           <div class="user-op">
             <span class="exit-btn" @click="logout">退出</span>
-            <span class="update-pwd-btn" @click="clickUserCenter">个人中心</span>
+            <span class="update-pwd-btn" @click="clickUserCenter"
+              >个人中心</span
+            >
           </div>
         </div>
       </div>
@@ -71,7 +75,11 @@
           <ThemePicker @change="themeChange"></ThemePicker>
         </div>
         <template slot="footer">
-          <DataButton type="primary" text="关闭" @click="showThemeDialog = false" />
+          <DataButton
+            type="primary"
+            text="关闭"
+            @click="showThemeDialog = false"
+          />
         </template>
       </AutoDialog>
     </template>
@@ -222,6 +230,17 @@ export default {
     //点击顶部导航菜单
     onClickTopNavMenuItem(item) {
       let path = item._fullPath;
+      
+      if(path == 'innerLink'){
+        let componentName = item.component;
+        let data={
+                url:componentName,
+            }
+            this.$router.push({
+                name:'InnerLink',
+                query:data
+            })
+      }else{
       let hasChildren = item.children && item.children.length;
       if (!hasChildren) {
         if (isExternal(path)) {
@@ -237,6 +256,7 @@ export default {
         let firstLeaf = this.$util.treeFirstLeaf(item);
         this.sideMenus = item.children;
         this.goPath(firstLeaf._fullPath);
+      }
       }
     },
     goPath(path) {

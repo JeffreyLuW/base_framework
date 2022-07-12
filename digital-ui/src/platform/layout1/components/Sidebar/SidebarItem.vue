@@ -77,6 +77,9 @@ export default {
       // Show parent if there are no child router to display
       if (showingChildren.length === 0) {
         this.onlyOneChild = { ... parent, path: '', noShowingChildren: true }
+        if(parent.path == 'innerLink'){
+          this.onlyOneChild = { ... parent, path: '', noShowingChildren: true, query:{'url':parent.component} }
+        }
         return true
       }
 
@@ -90,8 +93,8 @@ export default {
         return this.basePath
       }
       if (routeQuery) {
-        let query = JSON.parse(routeQuery);
-        return { path: path.resolve(this.basePath, routePath), query: query }
+        //let query = JSON.parse(routeQuery);
+        return { path: path.resolve(this.basePath, routePath), query: routeQuery }
       }
       return path.resolve(this.basePath, routePath)
     }

@@ -5,14 +5,22 @@
     @select="handleSelect"
   >
     <template v-for="(item, index) in topMenus">
-      <el-menu-item :style="{'--theme': theme}" :index="item.path" :key="index" v-if="index < visibleNumber"
+      <el-menu-item
+        :style="{ '--theme': theme }"
+        :index="item.path"
+        :key="index"
+        v-if="index < visibleNumber"
         ><svg-icon :icon-class="item.meta.icon" />
         {{ item.meta.title }}</el-menu-item
       >
     </template>
 
     <!-- 顶部菜单超出数量折叠 -->
-    <el-submenu :style="{'--theme': theme}" index="more" v-if="topMenus.length > visibleNumber">
+    <el-submenu
+      :style="{ '--theme': theme }"
+      index="more"
+      v-if="topMenus.length > visibleNumber"
+    >
       <template slot="title">更多菜单</template>
       <template v-for="(item, index) in topMenus">
         <el-menu-item
@@ -41,7 +49,7 @@ export default {
       // 是否为首次加载
       isFrist: false,
       // 当前激活菜单的 index
-      currentIndex: undefined
+      currentIndex: undefined,
     };
   },
   computed: {
@@ -56,9 +64,9 @@ export default {
         if (menu.hidden !== true) {
           // 兼容顶部栏一级菜单内部跳转
           if (menu.path === "/") {
-              topMenus.push(menu.children[0]);
+            topMenus.push(menu.children[0]);
           } else {
-              topMenus.push(menu);
+            topMenus.push(menu);
           }
         }
       });
@@ -93,36 +101,42 @@ export default {
     // 默认激活的菜单
     activeMenu() {
       //const path = this.$route.path;
-      const path = this.currentIndex == undefined? this.$route.path:this.currentIndex;
+      const path =
+        this.currentIndex == undefined ? this.$route.path : this.currentIndex;
       //console.log("默认激活的菜单path:",path);
       let activePath = path;
       //if (path.lastIndexOf("/") > 0) {
-      if ("/index" !== path) {
-        if (path.lastIndexOf("/") > 0) {
-          const tmpPath = path.substring(1, path.length);
-          activePath = "/" + tmpPath.substring(0, tmpPath.indexOf("/"));
-        }  
-        this.$store.dispatch('app/toggleSideBarHide', false);
+      if ("" !== path && "/index" !== path) {
+        let pathTemp = path.replaceAll("/", "");
+        if ("innerLink" == pathTemp) {
+          this.$store.dispatch("app/toggleSideBarHide", true);
+        } else {
+          if (path.lastIndexOf("/") > 0) {
+            const tmpPath = path.substring(1, path.length);
+            activePath = "/" + tmpPath.substring(0, tmpPath.indexOf("/"));
+            this.$store.dispatch("app/toggleSideBarHide", false);
+          }
+        }
       } else if ("/index" == path || "" == path) {
         if (!this.isFrist) {
           this.isFrist = true;
         } else {
           activePath = "index";
         }
-        this.$store.dispatch('app/toggleSideBarHide', true);
-      } else if(!this.$route.children) {
+        this.$store.dispatch("app/toggleSideBarHide", true);
+      } else if (!this.$route.children) {
         activePath = path;
-        this.$store.dispatch('app/toggleSideBarHide', true);
+        this.$store.dispatch("app/toggleSideBarHide", true);
       }
       this.activeRoutes(activePath);
       return activePath;
     },
   },
   beforeMount() {
-    window.addEventListener('resize', this.setVisibleNumber)
+    window.addEventListener("resize", this.setVisibleNumber);
   },
   beforeDestroy() {
-    window.removeEventListener('resize', this.setVisibleNumber)
+    window.removeEventListener("resize", this.setVisibleNumber);
   },
   mounted() {
     this.setVisibleNumber();
@@ -135,21 +149,32 @@ export default {
     },
     // 菜单选择事件
     handleSelect(key, keyPath) {
-      //console.log("菜单选择key:",key);
+      console.log("菜单选择key:", key);
       this.currentIndex = key;
       //const route = this.routers.find(item => item.path === key);
-      const route = this.topbarRouters.find(item => item.path === key);
-      if (this.ishttp(key)) {
-        // http(s):// 路径新窗口打开
-        window.open(key, "_blank");
-      } else if (!route || !route.children) {
-        // 没有子路由路径内部打开
-        this.$router.push({ path: key });
-        this.$store.dispatch('app/toggleSideBarHide', true);
+      const route = this.topbarRouters.find((item) => item.path === key);
+      if (key == "innerLink") {
+        let data = {
+          url: route.component,
+        };
+        this.$router.push({
+          name: "InnerLink",
+          query: data,
+        });
+        this.$store.dispatch("app/toggleSideBarHide", true);
       } else {
-        // 显示左侧联动菜单
-        this.activeRoutes(key);
-        this.$store.dispatch('app/toggleSideBarHide', false);
+        if (this.ishttp(key)) {
+          // http(s):// 路径新窗口打开
+          window.open(key, "_blank");
+        } else if (!route || !route.children) {
+          // 没有子路由路径内部打开
+          this.$router.push({ path: key });
+          this.$store.dispatch("app/toggleSideBarHide", true);
+        } else {
+          // 显示左侧联动菜单
+          this.activeRoutes(key);
+          this.$store.dispatch("app/toggleSideBarHide", false);
+        }
       }
     },
     // 当前激活的路由
@@ -163,25 +188,25 @@ export default {
         });
       } */
       //console.log("当前激活的路由key:",key);
-      for(var item in this.topbarRouters){
-        if(this.topbarRouters[item].hidden !== true){
-          if(this.topbarRouters[item].path === key){
+      for (var item in this.topbarRouters) {
+        if (this.topbarRouters[item].hidden !== true) {
+          if (this.topbarRouters[item].path === key) {
             this.rootMenuItem = this.topbarRouters[item];
             break;
           }
         }
       }
-      if(this.rootMenuItem != null){
+      if (this.rootMenuItem != null) {
         let sideMenus = this.rootMenuItem.children || null;
-        if(sideMenus!=null && sideMenus.length>0){
+        if (sideMenus != null && sideMenus.length > 0) {
           this.$store.commit("SET_SIDE_MENUS", sideMenus);
           //this.$router.push(sideMenus[0]._fullPath);
         }
       }
     },
     ishttp(url) {
-      return url.indexOf('http://') !== -1 || url.indexOf('https://') !== -1
-    }
+      return url.indexOf("http://") !== -1 || url.indexOf("https://") !== -1;
+    },
   },
 };
 </script>
@@ -196,8 +221,9 @@ export default {
   margin: 0 10px !important;
 }
 
-.topmenu-container.el-menu--horizontal > .el-menu-item.is-active, .el-menu--horizontal > .el-submenu.is-active .el-submenu__title {
-  border-bottom: 2px solid #{'var(--theme)'} !important;
+.topmenu-container.el-menu--horizontal > .el-menu-item.is-active,
+.el-menu--horizontal > .el-submenu.is-active .el-submenu__title {
+  border-bottom: 2px solid #{"var(--theme)"} !important;
   color: #303133;
 }
 

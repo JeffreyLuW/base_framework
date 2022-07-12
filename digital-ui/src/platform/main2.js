@@ -79,6 +79,8 @@ Vue.prototype.$win = win_util;
 Vue.prototype.$formHelper = formHelper;
 Vue.prototype.$perm = PermChecker;
 Vue.prototype.$bus = new Vue();
+//template中辅助调试
+Vue.prototype.$log = console.log;
 
 Vue.prototype.msgSuccess = function(msg) {
   this.$message({ showClose: true, message: msg, type: "success" });
