@@ -7,7 +7,7 @@ import com.meide.demo.domain.VO.DeviceGroupVo;
 import com.meide.demo.mapper.DeviceGroupMapper;
 import com.meide.demo.utils.DozerUtil;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.beanutils.BeanUtils;
+//import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;

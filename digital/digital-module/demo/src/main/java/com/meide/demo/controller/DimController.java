@@ -23,5 +23,6 @@ public class DimController {
     @GetMapping("/demo")
     public void demo(){
         dimService.query();
+        dimService.querySlave();
     }
 }
