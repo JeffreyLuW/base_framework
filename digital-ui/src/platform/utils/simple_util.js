@@ -995,6 +995,16 @@ class SimpleUtil {
       if (config.configValue.indexOf("://") !== -1) {
         //可能是一个http地址
         rs = this.fixFileUrl(config.configValue, baseUrl);
+      }else if(config.configKey == "page.sys.logo" && config.configValue == "|"){
+        //配置|时使用public/image下 banner-logo-用户名的图片
+        let userName = this.rootVue.$store.state.user.name;
+        rs = "/img/banner-logo-" + userName + ".png";
+        //favicon使用用户名后缀的图片
+        var link = document.querySelector("link[rel*='shortcut']") || document.createElement('link');
+        link.type = 'image/x-icon';
+        link.rel = 'shortcut';
+        link.href = "/favicon-" + userName + ".ico";
+        document.getElementsByTagName('head')[0].appendChild(link);
       }
     } else if (config.validateImage) {
       rs = this.fixFileUrl(config.configValue, baseUrl);
