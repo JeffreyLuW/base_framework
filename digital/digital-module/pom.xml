@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>demo</module>
+        <module>version-control</module>
     </modules>
 
     <dependencyManagement>
