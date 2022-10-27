@@ -193,24 +193,24 @@ public class SysDeptServiceImpl implements ISysDeptService
         }
         dept.setAncestors(info.getAncestors() + "," + dept.getParentId());
         int num = deptMapper.insertDept(dept);
-        /*if (num > 0) {
-            //插入管理机构
-            ManagementEntity organ = new ManagementEntity();
-            organ.setId(dept.getDeptId());
-            organ.setOrganName(dept.getDeptName());
-            organ.setMOrganCode(dept.getCode());
-            organ.setUpperOrganName(dept.getParentId() + "");
-
-            //  设置 部门介绍
-            if (StringUtils.isNotEmpty(dept.getOrganIntroduce())) {
-                organ.setOrganIntroduce(dept.getOrganIntroduce());
-            }
-
-            num = deptMapper.insertManagement(organ);
-            if (num == 0) {
-                throw new CustomException("新增部门失败！");
-            }
-        }*/
+//        if (num > 0) {
+//            //插入管理机构
+//            ManagementEntity organ = new ManagementEntity();
+//            organ.setId(dept.getDeptId());
+//            organ.setOrganName(dept.getDeptName());
+//            organ.setMOrganCode(dept.getCode());
+//            organ.setUpperOrganName(dept.getParentId() + "");
+//
+//            //  设置 部门介绍
+//            if (StringUtils.isNotEmpty(dept.getOrganIntroduce())) {
+//                organ.setOrganIntroduce(dept.getOrganIntroduce());
+//            }
+//
+//            num = deptMapper.insertManagement(organ);
+//            if (num == 0) {
+//                throw new CustomException("新增部门失败！");
+//            }
+//        }
         return num;
     }
 
@@ -238,23 +238,23 @@ public class SysDeptServiceImpl implements ISysDeptService
             // 如果该部门是启用状态，则启用该部门的所有上级部门
             updateParentDeptStatus(dept);
         }
-        if (result > 0) {
-            ManagementEntity organ = new ManagementEntity();
-            organ.setId(dept.getDeptId());
-            organ.setOrganName(dept.getDeptName());
-            organ.setMOrganCode(dept.getCode());
-            organ.setUpperOrganName(dept.getParentId() + "");
-
-            //  设置 部门介绍
-            if (StringUtils.isNotEmpty(dept.getOrganIntroduce())) {
-                organ.setOrganIntroduce(dept.getOrganIntroduce());
-            }
-
-            int num = deptMapper.updateManagement(organ);
-            if (num == 0) {
-                throw new CustomException("修改部门失败！");
-            }
-        }
+//        if (result > 0) {
+//            ManagementEntity organ = new ManagementEntity();
+//            organ.setId(dept.getDeptId());
+//            organ.setOrganName(dept.getDeptName());
+//            organ.setMOrganCode(dept.getCode());
+//            organ.setUpperOrganName(dept.getParentId() + "");
+//
+//            //  设置 部门介绍
+//            if (StringUtils.isNotEmpty(dept.getOrganIntroduce())) {
+//                organ.setOrganIntroduce(dept.getOrganIntroduce());
+//            }
+//
+//            int num = deptMapper.updateManagement(organ);
+//            if (num == 0) {
+//                throw new CustomException("修改部门失败！");
+//            }
+//        }
         return result;
     }
 

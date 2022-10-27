@@ -237,7 +237,7 @@
             </td>
           </tr>
           <tr>
-            <td :class="themeTableLabelClass(rules.email)">经度</td>
+            <td class="theme-table-form__label">经度</td>
             <td class="theme-table-form__input">
               <el-form-item label="经度" prop="email">
                 <el-input
@@ -260,7 +260,7 @@
           </tr>
 
           <tr>
-            <td :class="themeTableLabelClass(rules.parentId)">部门介绍</td>
+            <td class="theme-table-form__label">部门介绍</td>
             <td class="theme-table-form__input" colspan="3">
               <el-form-item label="部门介绍" prop="leader">
                 <el-input
@@ -284,7 +284,7 @@ import {
   delDept,
   addDept,
   updateDept,
-  listDeptExcludeChild
+  listDeptExcludeChild,
 } from "@/platform/api/system/dept";
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
@@ -296,7 +296,7 @@ export default {
   mixins: [ruoyi_page_click],
   data() {
     let permMap = this.$perm.checkArrayToPermMap([
-      { type: "add", permi: ["system:dept:add"] }
+      { type: "add", permi: ["system:dept:add"] },
     ]);
     return {
       // 遮罩层
@@ -317,45 +317,45 @@ export default {
       // 查询参数
       queryParams: {
         deptName: undefined,
-        status: undefined
+        status: undefined,
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
         parentId: [
-          { required: false, message: "上级部门不能为空", trigger: "blur" }
+          { required: true, message: "上级部门不能为空", trigger: "blur" },
         ],
         code: [{ required: true, message: "编号不能为空", trigger: "blur" }],
         type: [
-          { required: true, message: "机构类型不能为空", trigger: "blur" }
+          { required: true, message: "机构类型不能为空", trigger: "blur" },
         ],
         deptName: [
-          { required: true, message: "部门名称不能为空", trigger: "blur" }
+          { required: true, message: "部门名称不能为空", trigger: "blur" },
         ],
         orderNum: [
-          { required: true, message: "菜单顺序不能为空", trigger: "blur" }
+          { required: true, message: "菜单顺序不能为空", trigger: "blur" },
         ],
         email: [
           {
             type: "email",
             message: "'请输入正确的邮箱地址",
-            trigger: ["blur", "change"]
-          }
+            trigger: ["blur", "change"],
+          },
         ],
         phone: [
           {
             pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
             message: "请输入正确的手机号码",
-            trigger: "blur"
-          }
-        ]
-      }
+            trigger: "blur",
+          },
+        ],
+      },
     };
   },
   created() {
     this.getList();
-    this.getDicts("sys_normal_disable").then(response => {
+    this.getDicts("sys_normal_disable").then((response) => {
       this.statusOptions = response.data;
     });
   },
@@ -363,7 +363,7 @@ export default {
     /** 查询部门列表 */
     getList() {
       this.loading = true;
-      listDept(this.queryParams).then(response => {
+      listDept(this.queryParams).then((response) => {
         this.deptList = this.handleTree(response.data, "deptId");
         console.log(this.deptList);
         this.loading = false;
@@ -377,7 +377,7 @@ export default {
       return {
         id: node.deptId,
         label: node.deptName,
-        children: node.children
+        children: node.children,
       };
     },
     // 字典状态字典翻译
@@ -401,7 +401,7 @@ export default {
         email: undefined,
         code: undefined,
         type: undefined,
-        status: "0"
+        status: "0",
       };
       this.resetForm("form");
     },
@@ -422,32 +422,32 @@ export default {
       }
       this.open = true;
       this.title = "添加部门";
-      listDept().then(response => {
+      listDept().then((response) => {
         this.deptOptions = this.handleTree(response.data, "deptId");
       });
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      getDept(row.deptId).then(response => {
+      getDept(row.deptId).then((response) => {
         this.form = response.data;
         this.open = true;
         this.title = "修改部门";
       });
-      listDeptExcludeChild(row.deptId).then(response => {
+      listDeptExcludeChild(row.deptId).then((response) => {
         this.deptOptions = this.handleTree(response.data, "deptId");
       });
     },
     /** 提交按钮 */
-    submitForm: function() {
-      this.$refs["form"].validate(valid => {
+    submitForm: function () {
+      this.$refs["form"].validate((valid) => {
         if (valid) {
-          this.form.longitude = parseFloat(this.form.longitude)
-          this.form.latitude = parseFloat(this.form.latitude)
+          this.form.longitude = parseFloat(this.form.longitude);
+          this.form.latitude = parseFloat(this.form.latitude);
           if (this.form.deptName)
             this.form.deptName = this.form.deptName.trim();
           if (this.form.deptId != undefined) {
-            updateDept(this.form).then(response => {
+            updateDept(this.form).then((response) => {
               if (response.code === 200) {
                 this.msgSuccess("修改成功");
                 this.open = false;
@@ -455,7 +455,7 @@ export default {
               }
             });
           } else {
-            addDept(this.form).then(response => {
+            addDept(this.form).then((response) => {
               if (response.code === 200) {
                 this.msgSuccess("新增成功");
                 this.open = false;
@@ -474,18 +474,18 @@ export default {
         {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
-          type: "warning"
+          type: "warning",
         }
       )
-        .then(function() {
+        .then(function () {
           return delDept(row.deptId);
         })
         .then(() => {
           this.getList();
           this.msgSuccess("删除成功");
         })
-        .catch(function() {});
-    }
-  }
+        .catch(function () {});
+    },
+  },
 };
 </script>
