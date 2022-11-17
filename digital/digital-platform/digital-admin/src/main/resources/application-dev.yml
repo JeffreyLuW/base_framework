@@ -108,7 +108,7 @@ spring:
       master:
         driverClassName: com.mysql.cj.jdbc.Driver
         ##平时开发使用
-        url: jdbc:mysql://127.0.0.1/mdzhsw?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+        url: jdbc:mysql://127.0.0.1/baseframework?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
         username: root
         password: jc1
       # 从库数据源
