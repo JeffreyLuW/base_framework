@@ -14,6 +14,7 @@ if (theme&&window.__theme_color) {
 
 const state = {
   title: defaultSettings.title,
+  name: null,
   theme: theme,
   sideTheme: oldSettings.sideTheme || sideTheme,
   showSettings: showSettings,
@@ -46,9 +47,14 @@ const mutations = {
     }
     //当前配置 "page.login.bg", "page.sys.name", "page.sys.logo", "page.sys.favicon", "pwd.security.rules"
     state.sysConfigs = Object.freeze(sysConfigsMap);
+    let nameConfig = sysConfigsMap['page.sys.name'];
+    if (nameConfig && nameConfig.configValue !== "|") {
+      state.name = nameConfig.configValue;
+    }
     //设置html-title:tab标签的标题。
-    let titleConfig = sysConfigsMap['page.sys.name'];
+    let titleConfig = sysConfigsMap['page.sys.title'];
     if (titleConfig && titleConfig.configValue) {
+      state.title = titleConfig.configValue;
       document.querySelector("title").innerText = titleConfig.configValue;
     }
     //favicon的图片

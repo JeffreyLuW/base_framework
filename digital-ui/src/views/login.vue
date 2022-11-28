@@ -76,7 +76,7 @@
             :loading="loading"
             size="medium"
             type="primary"
-            style="width: 100%;"
+            style="width: 100%"
             @click.native.prevent="handleLogin"
           >
             <span v-if="!loading">登 录</span>
@@ -97,11 +97,11 @@
           :margin="0"
         ></vue-qr>
         <div class="refresh">
-          <span style="color:red;">{{ bottomText }}</span>
+          <span style="color: red">{{ bottomText }}</span>
           <span
             class="sec"
             @click="setConfig"
-            style="color:#2563bb;margin-left:10px"
+            style="color: #2563bb; margin-left: 10px"
             >刷新</span
           >
         </div>
@@ -109,7 +109,6 @@
       <div class="ewm-content" v-if="isEWM && qrCodeType == 1">
         <img :src="qRCodeuRL" alt="" />
       </div>
-
     </el-form>
 
     <video muted autoplay loop class="bgvido" style="opacity: 1" v-if="show">
@@ -123,7 +122,12 @@
 </template>
 
 <script lang="jsx">
-import { getCodeImg, resetPwd, getQrCode, getQrCodeInfo } from "../platform/api/login";
+import {
+  getCodeImg,
+  resetPwd,
+  getQrCode,
+  getQrCodeInfo,
+} from "../platform/api/login";
 import { decrypt, encrypt } from "../platform/utils/jsencrypt";
 import loginBackgroundImage from "../assets/image/login-background.jpg";
 import formhelper from "../platform/utils/formhelper.js";
@@ -153,13 +157,25 @@ export default {
       },
       loginRules: {
         username: [
-          { required: true, trigger: ["change", "blur"], message: "用户名不能为空" },
+          {
+            required: true,
+            trigger: ["change", "blur"],
+            message: "用户名不能为空",
+          },
         ],
         password: [
-          { required: true, trigger: ["change", "blur"], message: "密码不能为空" },
+          {
+            required: true,
+            trigger: ["change", "blur"],
+            message: "密码不能为空",
+          },
         ],
         code: [
-          { required: true, trigger: ["change", "blur"], message: "验证码不能为空" },
+          {
+            required: true,
+            trigger: ["change", "blur"],
+            message: "验证码不能为空",
+          },
         ],
       },
       loading: false,
@@ -173,7 +189,7 @@ export default {
       uuid: "",
       soket: "",
       soketPath: ``,
-      bottomText:'请使用APP扫码登录'
+      bottomText: "请使用APP扫码登录",
     };
   },
   watch: {
@@ -185,7 +201,7 @@ export default {
     },
   },
   created() {
-    this.soketPath = process.env.VUE_APP_BASE_SOKET_API+'/websocket/'
+    this.soketPath = process.env.VUE_APP_BASE_SOKET_API + "/websocket/";
     this.uuid = Util.uuid().replace(/-/g, "");
     this.getCode();
     this.getCookie();
@@ -225,27 +241,26 @@ export default {
     },
     loginTitle() {
       let sysConfig = this.$store.state.settings.sysConfigs;
-      let titleConfig = sysConfig["page.sys.name"];
+      let titleConfig = sysConfig["page.sys.title"];
       let title = titleConfig.configValue || "后台管理系统";
       return title;
     },
   },
   methods: {
     setConfig() {
-      this.bottomText = '请使用APP扫码登录'
+      this.bottomText = "请使用APP扫码登录";
       let tmp = JSON.stringify({
         clientId: this.uuid,
         timestamp: new Date().getTime(),
       });
       getQrCodeInfo({ str: tmp }).then((res) => {
         this.config = {
-          logo: require('../assets/logo/qrCodeLogo.png'),
+          logo: require("../assets/logo/qrCodeLogo.png"),
           value: JSON.stringify({
             type: "login",
             info: res.data,
           }),
         };
-
       });
     },
     showEwm(type) {
@@ -255,8 +270,8 @@ export default {
         this.qrCodeType = type;
         this.isEWM = true;
       }
-      if(type == 2){
-        this.setConfig()
+      if (type == 2) {
+        this.setConfig();
       }
     },
     getCode() {
@@ -285,7 +300,8 @@ export default {
       const rememberMe = this.$util.localStorage("rememberMe");
       this.loginForm = {
         username: username === undefined ? this.loginForm.username : username,
-        password: password === undefined ? this.loginForm.password : decrypt(password),
+        password:
+          password === undefined ? this.loginForm.password : decrypt(password),
         rememberMe: rememberMe === undefined ? false : Boolean(rememberMe),
       };
     },
@@ -295,7 +311,10 @@ export default {
           this.loading = true;
           if (this.loginForm.rememberMe) {
             this.$util.localStorage("username", this.loginForm.username);
-            this.$util.localStorage("password", encrypt(this.loginForm.password));
+            this.$util.localStorage(
+              "password",
+              encrypt(this.loginForm.password)
+            );
             this.$util.localStorage("rememberMe", this.loginForm.rememberMe);
           } else {
             this.$util.localStorageRemove("username");
@@ -305,7 +324,7 @@ export default {
           this.$store
             .dispatch("Login", this.loginForm)
             .then(() => {
-              this.$router.push({path: this.redirect || "/"});
+              this.$router.push({ path: this.redirect || "/" });
             })
             .catch(() => {
               this.loading = false;
@@ -412,7 +431,7 @@ export default {
     getMessage(msg) {
       let a = JSON.parse(msg.data);
       if (a.type == "login") {
-        if (a.code !== 200) return this.bottomText = a.msg;
+        if (a.code !== 200) return (this.bottomText = a.msg);
         this.$store.commit("SET_TOKEN", a.data);
         this.socket.close();
         // if(a.data.bigscreen){
@@ -420,13 +439,12 @@ export default {
         // }else{
         //    this.$router.push({path: this.redirect || "/"});
         // }
-        this.$router.push({path: this.redirect || "/"});
-
-      }else if(a.type == 'loginMessage'){
+        this.$router.push({ path: this.redirect || "/" });
+      } else if (a.type == "loginMessage") {
         if (a.code !== 200) return this.$message.error(a.msg);
-        this.bottomText = a.msg
+        this.bottomText = a.msg;
         setTimeout(() => {
-          this.bottomText = '登录超时'
+          this.bottomText = "登录超时";
         }, 30000);
       }
     },

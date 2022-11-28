@@ -1,45 +1,92 @@
 <template>
-  <div class="sidebar-logo-container" :class="{'collapse':collapse}" :style="{ backgroundColor: sideTheme === 'theme-dark' ? variables.menuBackground : variables.menuLightBackground }">
+  <div
+    class="sidebar-logo-container"
+    :class="{ collapse: collapse }"
+    :style="{
+      backgroundColor:
+        sideTheme === 'theme-dark'
+          ? variables.menuBackground
+          : variables.menuLightBackground,
+    }"
+  >
     <transition name="sidebarLogoFade">
-      <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/">
-        <img v-if="logo" :src="logo" class="sidebar-logo" />
-        <h1 v-else class="sidebar-title" :style="{ color: sideTheme === 'theme-dark' ? variables.logoTitleColor : variables.logoLightTitleColor }">{{ title }} </h1>
+      <router-link
+        v-if="collapse"
+        key="collapse"
+        class="sidebar-logo-link"
+        to="/"
+      >
+        <img v-if="logo" :src="logoUrl" class="sidebar-logo" />
+        <h1
+          v-else
+          class="sidebar-title"
+          :style="{
+            color:
+              sideTheme === 'theme-dark'
+                ? variables.logoTitleColor
+                : variables.logoLightTitleColor,
+          }"
+        >
+          {{ title }}
+        </h1>
       </router-link>
       <router-link v-else key="expand" class="sidebar-logo-link" to="/">
-        <img v-if="logo" :src="logo" class="sidebar-logo" />
-        <h1 class="sidebar-title" :style="{ color: sideTheme === 'theme-dark' ? variables.logoTitleColor : variables.logoLightTitleColor }">{{ title }} </h1>
+        <img v-if="logo" :src="logoUrl" class="sidebar-logo" />
+        <h1
+          class="sidebar-title"
+          :style="{
+            color:
+              sideTheme === 'theme-dark'
+                ? variables.logoTitleColor
+                : variables.logoLightTitleColor,
+          }"
+        >
+          {{ title }}
+        </h1>
       </router-link>
     </transition>
   </div>
 </template>
 
 <script>
-import logoImg from '@/assets/logo/logo.png'
-import variables from '@/platform/assets/styles1/variables.scss'
+import logoImg from "@/assets/logo/logo.png";
+import variables from "@/platform/assets/styles1/variables.scss";
 
 export default {
-  name: 'SidebarLogo',
+  name: "SidebarLogo",
   props: {
     collapse: {
       type: Boolean,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     variables() {
       return variables;
     },
     sideTheme() {
-      return this.$store.state.settings.sideTheme
-    }
+      return this.$store.state.settings.sideTheme;
+    },
+    logoUrl() {
+      let sysConfig = this.$store.state.settings.sysConfigs;
+      let sysLogoConfig = sysConfig["page.sys.logo"];
+      let configUrl = this.$util.getSysConfigParamUrl(sysLogoConfig);
+      if (configUrl) {
+        return configUrl;
+      }
+      return logo;
+    },
   },
   data() {
     return {
-      title: this.$store.state.settings.title,
-      logo: logoImg
-    }
-  }
-}
+      title:
+        this.$store.state.settings.name == "|"
+          ? ""
+          : this.$store.state.settings.name,
+      logo: logoImg,
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>
