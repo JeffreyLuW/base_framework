@@ -177,7 +177,7 @@ token:
 
 # MyBatis配置
 mybatis:
-    mapper-locations: classpath*:mapper/**/*.xml
+  mapperLocations: classpath*:mapper/**/*Mapper.xml
 
 mybatis-plus:
   global-config:
