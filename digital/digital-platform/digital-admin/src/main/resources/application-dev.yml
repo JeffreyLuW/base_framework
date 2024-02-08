@@ -106,11 +106,11 @@ spring:
     druid:
       # 主库数据源
       master:
-        driverClassName: com.mysql.cj.jdbc.Driver
+        driverClassName: com.mysql.cj.jdbc.Driver # com.alibaba.druid.pool.DruidDataSource里的主类（启动类）
         ##平时开发使用
-        url: jdbc:mysql://127.0.0.1/baseframework?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+        url: jdbc:mysql://127.0.0.1/baseinfo?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
         username: root
-        password: jc1
+        password: Lbb15853111953
       # 从库数据源
       slave:
         enabled: false
